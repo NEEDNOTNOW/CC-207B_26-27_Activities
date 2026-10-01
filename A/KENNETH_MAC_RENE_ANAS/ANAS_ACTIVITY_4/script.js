@@ -15,24 +15,54 @@
     label();
   });
 
-  var buttons=document.querySelectorAll('.filters button');
-  var items=document.querySelectorAll('.project');
-  buttons.forEach(function(b){
-    b.addEventListener('click',function(){
-      var f=b.dataset.filter;
-      buttons.forEach(function(x){ x.setAttribute('aria-pressed', x===b); });
-      items.forEach(function(p){ p.hidden = !(f==='all' || p.dataset.cat===f); });
+  var buttons=document.querySelectorAll('.filter-btn');
+  var items=document.querySelectorAll('.project-row');
+
+  buttons.forEach(function(button){
+    button.addEventListener('click',function(){
+      var filterValue = button.dataset.filter || 'all';
+
+      buttons.forEach(function(item){
+        var isActive = item === button;
+        item.setAttribute('aria-pressed', String(isActive));
+        item.classList.toggle('is-active', isActive);
+      });
+
+      items.forEach(function(project){
+        var cats = (project.dataset.cat || '').trim().split(/\s+/).filter(Boolean);
+        var show = filterValue === 'all' || cats.indexOf(filterValue) !== -1;
+
+        project.hidden = !show;
+        project.style.display = show ? '' : 'none';
+      });
     });
   });
 
   var status=document.getElementById('status');
   document.getElementById('copy').addEventListener('click',function(){
-    var addr='hello@example.com';
+    var addr='Kennethmacrene.anas@wvsu.edu.ph';
     function done(msg){ status.textContent=msg; setTimeout(function(){status.textContent='';},2500); }
     if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(addr).then(function(){done('Address copied');},function(){done(addr);});
+      navigator.clipboard.writeText(addr).then(function(){done('Email copied');},function(){done(addr);});
     } else { done(addr); }
   });
+
+  var scrollBtn=document.getElementById('scrollTop');
+  function toggleScrollButton(){
+    if(!scrollBtn) return;
+    if(window.scrollY > 260){
+      scrollBtn.classList.add('visible');
+    } else {
+      scrollBtn.classList.remove('visible');
+    }
+  }
+  if(scrollBtn){
+    window.addEventListener('scroll', toggleScrollButton);
+    scrollBtn.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    toggleScrollButton();
+  }
 
   document.getElementById('year').textContent=new Date().getFullYear();
 })();

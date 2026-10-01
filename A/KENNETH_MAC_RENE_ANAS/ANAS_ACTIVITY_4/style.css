@@ -150,7 +150,7 @@ header.nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5rem auto;
+  margin: 0 auto;
 }
 
 #projects .wrap {
@@ -235,6 +235,33 @@ header.nav {
   color: var(--ink);
   border: 1px solid var(--line);
   box-shadow: none;
+}
+
+.scroll-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: var(--accent-ink);
+  box-shadow: 0 18px 32px rgba(56, 88, 247, 0.28);
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: all 0.25s ease;
+  z-index: 20;
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .mini-stats {
@@ -357,6 +384,7 @@ header.nav {
 section {
   padding: 4rem 0;
   border-top: 1px solid var(--line);
+  scroll-margin-top: 4.5rem;
 }
 
 h2 {
@@ -457,14 +485,45 @@ h2 {
 }
 
 .skill-groups {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
+.skill-groups > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
 .skill-groups h3 {
-  margin: 0 0 0.9rem;
+  margin: 0;
   font-size: 1.2rem;
   letter-spacing: -0.03em;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
 }
 
 .project-list {
@@ -474,6 +533,10 @@ h2 {
   display: grid;
   gap: 1.5rem;
   justify-items: center;
+}
+
+.project-row[hidden] {
+  display: none !important;
 }
 
 .work-item {
@@ -488,8 +551,8 @@ h2 {
 
 .project-row {
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 2rem;
   align-items: center;
   justify-items: center;
   max-width: 68rem;
@@ -541,6 +604,27 @@ h2 {
   line-height: 1.8;
 }
 
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
 .skills,
 .skill-tags {
   list-style: none;
@@ -581,10 +665,18 @@ h2 {
 }
 
 .skill-value {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding-left: 1.1rem;
   color: var(--ink);
   font-size: 0.98rem;
   line-height: 1.5;
   font-weight: 600;
+}
+
+.skill-value li::marker {
+  color: var(--accent);
 }
 
 #skills {
