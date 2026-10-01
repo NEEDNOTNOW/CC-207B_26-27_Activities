@@ -27,10 +27,10 @@
 
   var status=document.getElementById('status');
   document.getElementById('copy').addEventListener('click',function(){
-    var addr='hello@example.com';
+    var addr='Kennethmacrene.anas@wvsu.edu.ph';
     function done(msg){ status.textContent=msg; setTimeout(function(){status.textContent='';},2500); }
     if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(addr).then(function(){done('Address copied');},function(){done(addr);});
+      navigator.clipboard.writeText(addr).then(function(){done('Email copied');},function(){done(addr);});
     } else { done(addr); }
   });
 
