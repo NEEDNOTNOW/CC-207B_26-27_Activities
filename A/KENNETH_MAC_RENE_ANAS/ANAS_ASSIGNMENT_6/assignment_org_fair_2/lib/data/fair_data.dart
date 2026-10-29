@@ -41,9 +41,9 @@ const officersByOrg = <String, List<OrgOfficer>>{
     OrgOfficer(name: 'Janelle Flores', position: 'Secretary'),
   ],
   'robotics': [
-    OrgOfficer(name: 'Kian Mendoza', position: 'Chairman'),
-    OrgOfficer(name: 'Chloe Rivera', position: 'Vice Chairman'),
-    OrgOfficer(name: 'Paolo Lim', position: 'Secretary'),
+    OrgOfficer(name: 'Kenneth Mac Rene Anas', position: 'Chairman'),
+    OrgOfficer(name: 'Kenneth Mac Rene Anas', position: 'Vice Chairman'),
+    OrgOfficer(name: 'Kenneth Mac Rene Anas', position: 'Secretary'),
   ],
   'ballers': [
     OrgOfficer(name: 'Enzo Ramirez', position: 'Captain'),
