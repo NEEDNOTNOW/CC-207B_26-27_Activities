@@ -2,10 +2,10 @@
 // Each test names the TODOs it checks. A test passes once those TODOs work.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:unit6_org_fair/data/orgs.dart';
-import 'package:unit6_org_fair/main.dart';
-import 'package:unit6_org_fair/screens/about_screen.dart';
-import 'package:unit6_org_fair/widgets/org_tile.dart';
+import 'package:assignment_org_fair/data/orgs.dart';
+import 'package:assignment_org_fair/main.dart';
+import 'package:assignment_org_fair/screens/about_screen.dart';
+import 'package:assignment_org_fair/widgets/org_tile.dart';
 
 OrgRepository repo() => OrgRepository(delay: const Duration(milliseconds: 100));
 
@@ -171,13 +171,13 @@ void main() {
         reason: 'TODO 10: add the Officers tab');
     await tester.tap(find.widgetWithText(Tab, 'Officers'));
     await tester.pumpAndSettle();
-    expect(find.text('Andrea Villanueva'), findsOneWidget);
-    expect(find.text('Vice President'), findsOneWidget);
+    expect(find.text('Fritz Marick Fernandez'), findsOneWidget);
+    expect(find.text('Vice Chairman'), findsOneWidget);
     expect(find.byType(Divider), findsNWidgets(2),
         reason: 'TODO 11: 3 officers, 2 dividers between them');
     await tester.tap(find.widgetWithText(Tab, 'Events'));
     await tester.pumpAndSettle();
-    expect(find.text('Hour of Code'), findsOneWidget);
+    expect(find.text('Intro to Flutter Workshop'), findsOneWidget);
   });
 
   testWidgets('TODO 13 (needs 4 and 5): the schedule highlights joined orgs', (tester) async {

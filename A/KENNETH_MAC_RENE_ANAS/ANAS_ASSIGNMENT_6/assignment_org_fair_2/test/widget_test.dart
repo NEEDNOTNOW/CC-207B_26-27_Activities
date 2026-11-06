@@ -49,10 +49,7 @@ void main() {
 
     await tester.tap(find.text('My Orgs'));
     await tester.pumpAndSettle();
-    expect(
-      find.text('You have not joined any organizations yet.'),
-      findsOneWidget,
-    );
+    expect(find.text("You haven't joined any org yet."), findsOneWidget);
 
     await tester.tap(find.text('Orgs'));
     await tester.pumpAndSettle();
@@ -78,7 +75,7 @@ void main() {
     expect(find.text('Shuttle Smashers'), findsOneWidget);
     expect(find.text('Computer Science Circle'), findsNothing);
 
-    await tester.tap(find.byTooltip('Show grid'));
+    await tester.tap(find.byTooltip('Show as grid'));
     await tester.pumpAndSettle();
     expect(find.byType(GridView), findsOneWidget);
   });
@@ -95,7 +92,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Officers'));
     await tester.pumpAndSettle();
-    expect(find.text('Kian Mendoza'), findsOneWidget);
+    expect(find.text('Kenneth Mac Rene Anas'), findsNWidgets(3));
 
     await tester.tap(find.text('Events'));
     await tester.pumpAndSettle();
@@ -141,7 +138,7 @@ void main() {
     expect(find.text('1'), findsOneWidget);
     await tester.tap(find.text('Orgs'));
     await tester.pumpAndSettle();
-    await tester.tap(find.byTooltip('Show grid'));
+    await tester.tap(find.byTooltip('Show as grid'));
     await tester.pumpAndSettle();
     expect(find.text('Joined'), findsOneWidget);
 
@@ -159,9 +156,6 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Leave').last);
     await tester.pumpAndSettle();
-    expect(
-      find.text('You have not joined any organizations yet.'),
-      findsOneWidget,
-    );
+    expect(find.text("You haven't joined any org yet."), findsOneWidget);
   });
 }

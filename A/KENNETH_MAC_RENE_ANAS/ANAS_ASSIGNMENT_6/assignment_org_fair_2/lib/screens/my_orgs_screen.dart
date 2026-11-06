@@ -31,7 +31,12 @@ class MyOrgsScreen extends StatelessWidget {
         ],
       ),
     );
-    if (shouldLeave == true) onLeave(org);
+    if (shouldLeave == true && context.mounted) {
+      onLeave(org);
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text('You left ${org.acronym}')));
+    }
   }
 
   @override
@@ -51,7 +56,7 @@ class MyOrgsScreen extends StatelessWidget {
                     Icon(Icons.groups_outlined, size: 48),
                     SizedBox(height: 16),
                     Text(
-                      'You have not joined any organizations yet.',
+                      "You haven't joined any org yet.",
                       textAlign: TextAlign.center,
                     ),
                   ],
