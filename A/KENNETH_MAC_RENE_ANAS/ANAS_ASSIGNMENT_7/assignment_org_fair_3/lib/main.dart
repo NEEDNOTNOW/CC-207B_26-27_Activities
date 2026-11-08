@@ -29,6 +29,7 @@ class OrgFairApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CICT Org Fair',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(colorSchemeSeed: Colors.teal),
       darkTheme: ThemeData(
         colorSchemeSeed: Colors.teal,
