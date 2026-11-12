@@ -1,0 +1,8 @@
+{
+  "CMS": "contentful",
+  "CMS_URL": "https://your-contentful-server.example.com",
+  "CMS_SPACE": "",
+  "CMS_PROJECT": "",
+  "CMS_DATASET": "production",
+  "CMS_TOKEN": ""
+}
