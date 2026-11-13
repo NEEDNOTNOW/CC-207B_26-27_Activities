@@ -14,23 +14,23 @@ E2 home_shell: body:
 
 E3 org_list_screen: drawer: 
 
-    lib/screens/org_list_screen.dart:142-148
+    lib/screens/org_list_screen.dart:142-149
 
     When the drawer item is tapped, I call Navigator.pop first to close the drawer. If I skipped that, the drawer would stay open on top of the new page, and the transition would look messy. After it closes, Navigator.pushNamed opens the About page.
 
 E4 org_list_screen: chips:
 
-    lib/screens/org_list_screen.dart:246-255
+    lib/screens/org_list_screen.dart:247-257
 
     I used Wrap for the chips because it moves them to the next line when they don’t fit the available width. A Row tries to keep everything on one line, so on a narrow screen the chips would overflow.
 
 E5 org_list_screen: _buildGrid: 
 
-    lib/screens/org_list_screen.dart:268-274
+    lib/screens/org_list_screen.dart:270-278
 
-    The maxCrossAxisExtent of 240 caps each grid tile at 240 logical pixels wide. As the screen gets wider, more columns fit, and the grid works out the number of columns by itself while still accounting for the spacing between tiles. This makes the layout responsive without hardcoding a column count.
+    The maxCrossAxisExtent of 240 keeps grid tiles at or below 240 logical pixels wide. The grid calculates how many columns fit, including the spacing between tiles, so wider screens can show more columns without hardcoding a column count.
 
-E6 org_list_screen: _buildGrid:'
+E6 org_detail_screen: tabs:
 
     lib/screens/org_detail_screen.dart:30-45
 
@@ -38,7 +38,7 @@ E6 org_list_screen: _buildGrid:'
 
 E7 my_orgs_screen: _confirmLeave: 
     
-    lib/screens/my_orgs_screen.dart:17-34
+    lib/screens/my_orgs_screen.dart:17-36
     
     The dialog returns true if the user confirms leaving and false if they cancel. If they dismiss it some other way, like tapping outside, it returns null. Checking shouldLeave == true means the membership is only removed after an explicit confirmation, so a dismissed dialog never removes anything by accident.
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/orgs.dart';
 import '../models/registration.dart';
 import '../widgets/org_card.dart';
+import '../widgets/org_tile.dart';
 import '../widgets/state_message.dart';
 import 'org_detail_screen.dart';
 
@@ -47,11 +48,6 @@ class _OrgListScreenState extends State<OrgListScreen> {
     setState(() {
       _orgsFuture = widget.repository.fetchOrgs();
     });
-  }
-
-  void _setServerMode(ServerMode mode) {
-    widget.repository.mode = mode;
-    _reload();
   }
 
   void _toggleFavorite(Org org) {
@@ -104,22 +100,9 @@ class _OrgListScreenState extends State<OrgListScreen> {
         title: const Text('CICT Org Fair'),
         actions: [
           IconButton(
-            tooltip: _isGrid ? 'Show list' : 'Show grid',
+            tooltip: _isGrid ? 'Show list' : 'Show as grid',
             icon: Icon(_isGrid ? Icons.view_list : Icons.grid_view),
             onPressed: () => setState(() => _isGrid = !_isGrid),
-          ),
-          PopupMenuButton<ServerMode>(
-            tooltip: 'Fake server mode',
-            icon: const Icon(Icons.dns),
-            onSelected: _setServerMode,
-            itemBuilder: (_) => [
-              for (final mode in ServerMode.values)
-                CheckedPopupMenuItem(
-                  value: mode,
-                  checked: widget.repository.mode == mode,
-                  child: Text('Server: ${mode.name}'),
-                ),
-            ],
           ),
         ],
       ),
@@ -267,12 +250,21 @@ class _OrgListScreenState extends State<OrgListScreen> {
                   padding: const EdgeInsets.all(8),
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 240,
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
                     mainAxisExtent: 220,
                   ),
                   itemCount: visible.length,
-                  itemBuilder: (_, i) => _card(visible[i], isGrid: true),
+                  itemBuilder: (_, i) {
+                    final org = visible[i];
+                    return OrgTile(
+                      org: org,
+                      isFavorite: _favoriteIds.contains(org.id),
+                      isMember: widget.memberships.containsKey(org.id),
+                      onTap: () => _openDetail(org),
+                      onLongPress: () => _toggleFavorite(org),
+                    );
+                  },
                 )
               : ListView.builder(
                   itemCount: visible.length,
