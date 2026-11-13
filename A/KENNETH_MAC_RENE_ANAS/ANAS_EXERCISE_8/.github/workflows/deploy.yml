@@ -1,0 +1,67 @@
+name: Deploy Flutter web app to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - unit8
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build web app
+        env:
+          CMS_URL: ${{ vars.CMS_URL }}
+          CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
+          OMDB_KEY: ${{ secrets.OMDB_KEY }}
+        run: |
+          test -n "$CMS_URL" || { echo "Set the CMS_URL repository variable."; exit 1; }
+          test -n "$CONTENTFUL_DELIVERY_TOKEN" || { echo "Set the CONTENTFUL_DELIVERY_TOKEN repository secret."; exit 1; }
+          test -n "$OMDB_KEY" || { echo "Set the OMDB_KEY repository secret."; exit 1; }
+          flutter build web --release \
+            --base-href "/${GITHUB_REPOSITORY#*/}/" \
+            --dart-define="CMS_URL=$CMS_URL" \
+            --dart-define="CONTENTFUL_DELIVERY_TOKEN=$CONTENTFUL_DELIVERY_TOKEN" \
+            --dart-define="OMDB_KEY=$OMDB_KEY"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
